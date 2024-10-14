@@ -204,9 +204,8 @@ nav {
   transition: var(--transition);
 }
 .show-links {
-  height: 20rem; /* Large enough for all links */
+  max-height: 20rem; /* Large enough for all links */
 }
-/* // For desktop or tablet */
 @media screen and (min-width: 800px) {
   .nav-center {
     max-width: 1170px;
@@ -246,3 +245,7 @@ nav {
     color: var(--clr-primary-7);
   }
 }
+
+
+
+

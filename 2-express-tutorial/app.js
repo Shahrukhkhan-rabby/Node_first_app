@@ -1,20 +1,29 @@
-const http = require("http");
+const express = require("express");
+const app = express()
+const people = require("./routes/people");
+const auth = require("./routes/auth");
 
-const server = http.createServer((req, res) => {
-  // console.log(req.method)
-  const url = req.url;
-  if (url === "/") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>home page</h1>");
-    res.end();
-  } else if (url === "/about") {
-    res.writeHead(200, { "content-type": "text/html" });
-    res.write("<h1>about page</h1>");
-    res.end();
-  } else {
-    res.writeHead(404, { "content-type": "text/html" });
-    res.write("<h1>page not found</h1>");
-    res.end();
+
+app.use(express.static('./methods-public'))
+
+app.use(express.urlencoded({ extended: false }))
+
+app.use(express.json())
+
+app.use('/api/people', people)
+app.use('/login', auth)
+
+
+app.post('/login', (req, res) => {
+  const { name } = req.body
+  if (name) {
+    return res.status(200).send(`Welcome ${name}`)
   }
+  res.status(401).send('Please Provide Credentials')
+})
+
+
+
+app.listen(5000, () => {
+  console.log("Server is listening on port 5000...");
 });
-server.listen(5000);
